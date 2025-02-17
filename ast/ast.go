@@ -23,6 +23,24 @@ type Program struct {
 	Statements []Statement
 }
 
+type Identifier struct {
+	Value string
+	Token token.Token
+}
+
+type ReturnStatement struct {
+	Token       token.Token
+	ReturnValue Expression
+	Statement
+}
+
+type LetStatement struct {
+	Name  *Identifier
+	Token token.Token
+	Value Expression
+	Statement
+}
+
 // attching method to Program struct
 func (p *Program) TokenLiteral() string {
 	if len(p.Statements) == 0 {
@@ -32,22 +50,11 @@ func (p *Program) TokenLiteral() string {
 	return p.Statements[0].TokenLiteral()
 }
 
-type LetStatement struct {
-	Name  *Identifier
-	Token token.Token
-	Value Expression
-}
-
 func (l *LetStatement) stateNode() {}
 
 func (l *LetStatement) TokenLiteral() string {
 	// the literal is a character
 	return l.Token.Literal
-}
-
-type Identifier struct {
-	Value string
-	Token token.Token
 }
 
 func (I *Identifier) expressNode()         {}
